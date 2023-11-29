@@ -27,7 +27,9 @@ function Home2() {
         
         <Row>
           <Col md={12} className="home-about-social">
-            <h1>FIND ME ON</h1>
+            
+            <h1>
+              FIND ME ON</h1>
             <p>
               Feel free to <span className="purple">connect </span>with me
             </p>
@@ -35,8 +37,6 @@ function Home2() {
               <li className="social-icons">
                 <a
                   href="https://github.com/TonyStark0801"
-                  target="_blank"
-                  rel="noreferrer"
                   className="icon-colour  home-social-icons"
                 >
                   <AiFillGithub />

@@ -41,10 +41,12 @@ function Home() {
                 style={{ maxHeight: "300px" }}
               />
             </Col>
+            
           </Row>
+          <Home2 />
           {/* /About section */}
      
-          <Home2 />
+          
           
         </Container>
        
