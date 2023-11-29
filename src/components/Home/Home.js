@@ -2,13 +2,13 @@ import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import homeLogo from "../../Assets/header-img.svg";
 import Particle from "../Particle";
-import Home2 from "./Home2";
+import Home2 from "./About";
 import Type from "./Type";
 import About from "../Skills/Skills";
 
 function Home() {
   return (
-    <section>
+    
       <Container fluid className="home-section" id="home">
       <Particle />
         <Container className="home-content">
@@ -28,9 +28,7 @@ function Home() {
 
               <div style={{ paddingLeft:45,paddingBottom:45 ,textAlign: "left" }}>
                 <Type />
-                
               </div>
-              
             </Col>
 
             <Col md={5} style={{ paddingBottom: 10, paddingTop:30 }}>
@@ -41,9 +39,9 @@ function Home() {
                 style={{ maxHeight: "300px" }}
               />
             </Col>
-            
+            <Home2 />
           </Row>
-          <Home2 />
+          
           {/* /About section */}
      
           
@@ -51,7 +49,7 @@ function Home() {
         </Container>
        
       </Container>
-    </section>
+    
   );
 }
 

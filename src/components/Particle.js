@@ -1,9 +1,10 @@
 import React from "react";
+import { Container } from "react-bootstrap";
 import Particles from "react-tsparticles";
-
+import '../style.css'
 function Particle() {
   return (
-    <>
+    <Container id="particle">
     <Particles
       id="tsparticles"
       params={{
@@ -52,7 +53,7 @@ function Particle() {
     />
     
     
-    </>
+    </Container>
   );
 }
 

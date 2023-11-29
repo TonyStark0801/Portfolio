@@ -14,6 +14,8 @@ import {
   AiOutlineFundProjectionScreen,
   
 } from "react-icons/ai";
+import { MdConnectWithoutContact } from "react-icons/md";
+
 import {BsTools,BsFillHouseDoorFill,BsLaptop} from "react-icons/bs";
 import { CgFileDocument } from "react-icons/cg";
 
@@ -94,6 +96,15 @@ function NavBar() {
               </Nav.Link>
             </Nav.Item>
 
+            <Nav.Item>
+              <Nav.Link
+                as={Link}
+                to="/connect"
+                onClick={() => updateExpanded(false)}
+              >
+                <MdConnectWithoutContact style={{ marginBottom: "2px" }} /> Connect
+              </Nav.Link>
+            </Nav.Item>
             
 
             <Nav.Item className="fork-btn">

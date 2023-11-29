@@ -1,7 +1,5 @@
 import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
-import myImg from "../../Assets/avatar.svg";
-import Tilt from "react-parallax-tilt";
 import {
   AiFillGithub,
   AiOutlineTwitter,
@@ -12,6 +10,7 @@ import { FaLinkedinIn } from "react-icons/fa";
 function Home2() {
   return (
     <Container fluid className="home-about-section" id="about">
+    
       <Container>
           <div md={8} className="home-about-description">
             <p className="home-about-body">
@@ -23,16 +22,14 @@ function Home2() {
              ingenuity and create digital marvels that leave a lasting impact. Join me in crafting a digital landscape 
              where dreams come alive, one line of code at a time.
             </p>
+            
           </div>
         
         <Row>
           <Col md={12} className="home-about-social">
-            
             <h1>
-              FIND ME ON</h1>
-            <p>
-              Feel free to <span className="purple">connect </span>with me
-            </p>
+              FEEL FREE TO <span className="purple">CONNECT! </span>
+            </h1>
             <ul className="home-about-social-links">
               <li className="social-icons">
                 <a
@@ -72,10 +69,13 @@ function Home2() {
                   <AiFillInstagram />
                 </a>
               </li>
-            </ul>
+              </ul>
           </Col>
+          
         </Row>
+        
       </Container>
+     
     </Container>
   );
 }
