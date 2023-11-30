@@ -15,9 +15,9 @@ function Connect() {
   const submitHandler=(e)=>{
     e.preventDefault();
     const config = {
-      SecureToken: 'de22f1b4-39a8-4a7c-b8d4-3897ef2580e2',
+      SecureToken: 'b88faa42-4927-4719-9165-6d7ee0d68d1b',
       To : 'anonymousperson6864@gmail.com',
-      From : formState.email,
+      From : 'anonymousperson6864@gmail.com',
       Subject : "This is my Contact form",
       Body : `${formState.name} connect to you over email. My phone number ${formState.phone}`
     };
@@ -39,6 +39,7 @@ function Connect() {
           <button type='submit'>Send</button>
           </Form>
         </div>
+        
 </section>
       );
     
