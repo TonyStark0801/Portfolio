@@ -2,6 +2,7 @@ import { Form} from 'semantic-ui-react';
 
 import Particle from "../Particle";
 import { useState } from 'react';
+import swal from '@sweetalert/with-react'
 
 
 
@@ -16,14 +17,14 @@ function Connect() {
     e.preventDefault();
     const config = {
       SecureToken: 'b88faa42-4927-4719-9165-6d7ee0d68d1b',
-      To : 'anonymousperson6864@gmail.com',
-      From : 'anonymousperson6864@gmail.com',
+      To : 'anonymousperson6863@gmail.com',
+      From : 'anonymousperson6863@gmail.com',
       Subject : "This is my Contact form",
-      Body : `${formState.name} connect to you over email. My phone number ${formState.phone}`
+      Body : `${formState.name} connect to you over email i.e ${formState.email}. My phone number ${formState.phone}`
     };
 
     if(window.Email){
-      window.Email.send(config).then(()=>alert("Message sent successfully!"));
+      window.Email.send(config).then((message)=>alert(message));
     }
   }
 
