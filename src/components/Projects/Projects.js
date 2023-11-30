@@ -20,7 +20,6 @@ function Projects() {
           <Col md={4} className="project-card">
             <ProjectCard
               imgPath={instantly}
-              isBlog={false}
               title="Instantly"
               description="Instantly is an open-source, freeware, easy-to-use, Peer-to-Peer (P2P) file transfer application for Android devices. It allows users to share any type of file (apps, multimedia, documents, etc.) at lightning speed without any limitations on file size or format, using the latest Wi-Fi Direct technology. Instantly comes with amazing features and capabilities, listed below."
               ghLink="https://github.com/TonyStark0801/Instantly"
@@ -31,7 +30,6 @@ function Projects() {
           <Col md={4} className="project-card">
             <ProjectCard
               imgPath={instantly}
-              isBlog={false}
               title="Project 2"
               description="Here we go again!!!"
               ghLink="#"
@@ -41,7 +39,6 @@ function Projects() {
           <Col md={4} className="project-card">
             <ProjectCard
               imgPath={instantly}
-              isBlog={false}
               title="Project 3"
               description="Will be filled later. No time for now"
               ghLink="#"
