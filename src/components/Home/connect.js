@@ -1,5 +1,4 @@
-import { Container } from 'react-bootstrap';
-import { Form, Input, TextArea, Button } from 'semantic-ui-react';
+import { Form} from 'semantic-ui-react';
 
 import Particle from "../Particle";
 import { useState } from 'react';
