@@ -429,13 +429,13 @@ button:focus {
   bottom: 0 !important;
   padding-top: 10px !important;
   padding-bottom: 8px !important ;
+  
 }
 .footer-copywright {
   text-align: center !important;
 }
 
 .footer-body {
-  z-index: 1;
   text-align: center !important;
 }
 
@@ -780,10 +780,9 @@ form{
   flex-direction: column;
   padding:  2vw 4vw;
   width: 90%;
-  max-width: 600px;
+  max-width: 600px; 
   border-radius: 10px;
-  opacity: 0.5;
-  
+  margin-top: 5vw;
   
 }
 
