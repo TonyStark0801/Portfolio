@@ -2,271 +2,158 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import {
-  FiMail,
-  FiPhone,
-  FiMapPin,
-  FiGithub,
-  FiLinkedin,
-  FiSend,
-} from "react-icons/fi";
-import { Button } from "@/components/ui/button";
+import { FiMail, FiMapPin, FiGithub, FiLinkedin, FiSend } from "react-icons/fi";
 import { personalInfo } from "@/data/personal";
 
-const containerVariants = {
+const container = {
   hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.2,
-    },
-  },
+  visible: { opacity: 1, transition: { staggerChildren: 0.14 } },
+};
+const item = {
+  hidden: { y: 24, opacity: 0 },
+  visible: { y: 0, opacity: 1, transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] as const } },
 };
 
-const itemVariants = {
-  hidden: { y: 20, opacity: 0 },
-  visible: {
-    y: 0,
-    opacity: 1,
-    transition: {
-      duration: 0.5,
-    },
-  },
-};
+const INPUT =
+  "w-full px-4 py-3 bg-background border border-border rounded-lg text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/30 transition-colors";
 
 export default function Contact() {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    subject: "",
-    message: "",
-  });
+  const [form, setForm] = useState({ name: "", email: "", subject: "", message: "" });
+  const [sent, setSent] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const onChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
+    setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
+
+  const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Create mailto link with form data
-    const mailtoLink = `mailto:${personalInfo.email}?subject=${encodeURIComponent(
-      formData.subject
-    )}&body=${encodeURIComponent(
-      `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`
+    const link = `mailto:${personalInfo.email}?subject=${encodeURIComponent(form.subject)}&body=${encodeURIComponent(
+      `Name: ${form.name}\nEmail: ${form.email}\n\n${form.message}`
     )}`;
-    window.location.href = mailtoLink;
-  };
-
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+    window.location.href = link;
+    setSent(true);
   };
 
   return (
-    <section id="contact" className="py-20 relative overflow-hidden bg-muted/30">
-      {/* Background Elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute w-96 h-96 top-1/4 -right-48 bg-accent/5 rounded-full blur-3xl"></div>
-        <div className="absolute w-96 h-96 bottom-1/4 -left-48 bg-primary/5 rounded-full blur-3xl"></div>
-      </div>
+    <section id="contact" className="py-24 relative overflow-hidden">
+      <div className="absolute -top-20 -right-40 w-[380px] h-[380px] rounded-full bg-accent/5 blur-3xl pointer-events-none" aria-hidden />
+      <div className="absolute -bottom-20 -left-40 w-[340px] h-[340px] rounded-full bg-primary/4 blur-3xl pointer-events-none" aria-hidden />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        {/* Section Header */}
+
+        {/* heading */}
         <motion.div
-          initial={{ y: -20, opacity: 0 }}
+          initial={{ y: 20, opacity: 0 }}
           whileInView={{ y: 0, opacity: 1 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          transition={{ duration: 0.5 }}
+          className="mb-14"
         >
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4">
-            Get In{" "}
+          <span className="section-label">Contact</span>
+          <h2 className="text-4xl sm:text-5xl font-extrabold tracking-tight leading-tight">
+            Let&apos;s Work<br />
             <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-              Touch
+              Together
             </span>
           </h2>
-          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            Have a project in mind or want to discuss opportunities? Feel free to
-            reach out!
-          </p>
         </motion.div>
 
         <motion.div
-          variants={containerVariants}
+          variants={container}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
-          className="grid grid-cols-1 lg:grid-cols-2 gap-12"
+          className="grid grid-cols-1 lg:grid-cols-5 gap-10"
         >
-          {/* Contact Info */}
-          <motion.div variants={itemVariants} className="space-y-8">
-            <div>
-              <h3 className="text-2xl font-bold text-foreground mb-6">
-                Contact Information
-              </h3>
-              <div className="space-y-4">
-                <a
-                  href={`mailto:${personalInfo.email}`}
-                  className="flex items-start gap-4 p-4 bg-card border border-border rounded-lg hover:border-primary transition-all group"
-                >
-                  <div className="p-3 bg-primary/10 rounded-lg group-hover:bg-primary/20 transition-colors">
-                    <FiMail className="text-primary" size={24} />
-                  </div>
-                  <div>
-                    <p className="text-sm text-muted-foreground mb-1">Email</p>
-                    <p className="font-medium text-foreground group-hover:text-primary transition-colors">
-                      {personalInfo.email}
-                    </p>
-                  </div>
-                </a>
+          {/* ── left info column (2/5) ── */}
+          <motion.div variants={item} className="lg:col-span-2 flex flex-col gap-6">
+            <p className="text-muted-foreground leading-relaxed text-sm max-w-sm">
+              Open to interesting problems, senior backend roles, and fintech projects.
+              Drop a line — I typically respond within 24 hours.
+            </p>
 
-                <a
-                  href={`tel:${personalInfo.phone}`}
-                  className="flex items-start gap-4 p-4 bg-card border border-border rounded-lg hover:border-primary transition-all group"
-                >
-                  <div className="p-3 bg-primary/10 rounded-lg group-hover:bg-primary/20 transition-colors">
-                    <FiPhone className="text-primary" size={24} />
-                  </div>
-                  <div>
-                    <p className="text-sm text-muted-foreground mb-1">Phone</p>
-                    <p className="font-medium text-foreground group-hover:text-primary transition-colors">
-                      {personalInfo.phone}
-                    </p>
-                  </div>
-                </a>
+            {/* contact details */}
+            <div className="flex flex-col gap-3">
+              <a
+                href={`mailto:${personalInfo.email}`}
+                className="flex items-center gap-3 card-base px-4 py-3 group"
+              >
+                <div className="p-2 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors">
+                  <FiMail size={16} className="text-primary" />
+                </div>
+                <div>
+                  <p className="font-mono text-[0.65rem] tracking-[0.1em] uppercase text-muted-foreground mb-0.5">Email</p>
+                  <p className="text-sm text-foreground group-hover:text-primary transition-colors">{personalInfo.email}</p>
+                </div>
+              </a>
 
-                <div className="flex items-start gap-4 p-4 bg-card border border-border rounded-lg">
-                  <div className="p-3 bg-primary/10 rounded-lg">
-                    <FiMapPin className="text-primary" size={24} />
-                  </div>
-                  <div>
-                    <p className="text-sm text-muted-foreground mb-1">Location</p>
-                    <p className="font-medium text-foreground">
-                      {personalInfo.location}
-                    </p>
-                  </div>
+              <div className="flex items-center gap-3 card-base px-4 py-3">
+                <div className="p-2 rounded-lg bg-primary/10">
+                  <FiMapPin size={16} className="text-primary" />
+                </div>
+                <div>
+                  <p className="font-mono text-[0.65rem] tracking-[0.1em] uppercase text-muted-foreground mb-0.5">Location</p>
+                  <p className="text-sm text-foreground">{personalInfo.location}</p>
                 </div>
               </div>
             </div>
 
-            {/* Social Links */}
+            {/* socials */}
             <div>
-              <h3 className="text-xl font-bold text-foreground mb-4">
-                Connect With Me
-              </h3>
-              <div className="flex items-center gap-4">
-                <a
-                  href={personalInfo.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="p-4 bg-card border border-border rounded-lg hover:border-primary hover:bg-card-hover transition-all group"
-                >
-                  <FiGithub
-                    size={24}
-                    className="text-muted-foreground group-hover:text-primary transition-colors"
-                  />
-                </a>
-                <a
-                  href={personalInfo.linkedin}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="p-4 bg-card border border-border rounded-lg hover:border-primary hover:bg-card-hover transition-all group"
-                >
-                  <FiLinkedin
-                    size={24}
-                    className="text-muted-foreground group-hover:text-primary transition-colors"
-                  />
-                </a>
+              <p className="font-mono text-[0.65rem] tracking-[0.1em] uppercase text-muted-foreground mb-3">// Find me on</p>
+              <div className="flex gap-3">
+                {[
+                  { href: personalInfo.github,   Icon: FiGithub,   label: "GitHub"   },
+                  { href: personalInfo.linkedin,  Icon: FiLinkedin, label: "LinkedIn"  },
+                ].map(({ href, Icon, label }) => (
+                  <a
+                    key={label}
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={label}
+                    className="p-3 rounded-lg card-base text-muted-foreground hover:text-primary transition-colors"
+                  >
+                    <Icon size={18} />
+                  </a>
+                ))}
               </div>
             </div>
           </motion.div>
 
-          {/* Contact Form */}
-          <motion.div variants={itemVariants}>
+          {/* ── right form column (3/5) ── */}
+          <motion.div variants={item} className="lg:col-span-3">
             <form
-              onSubmit={handleSubmit}
-              className="bg-card border border-border rounded-2xl p-8 space-y-6"
+              onSubmit={onSubmit}
+              className="card-base p-7 flex flex-col gap-5"
             >
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                <div>
-                  <label
-                    htmlFor="name"
-                    className="block text-sm font-medium text-foreground mb-2"
-                  >
-                    Name
-                  </label>
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    required
-                    value={formData.name}
-                    onChange={handleChange}
-                    className="w-full px-4 py-3 bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-foreground"
-                    placeholder="Your name"
-                  />
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                <div className="flex flex-col gap-1.5">
+                  <label htmlFor="name" className="font-mono text-[0.7rem] tracking-[0.08em] uppercase text-muted-foreground">Name</label>
+                  <input id="name" name="name" type="text" required value={form.name} onChange={onChange} placeholder="Your name" className={INPUT} />
                 </div>
-                <div>
-                  <label
-                    htmlFor="email"
-                    className="block text-sm font-medium text-foreground mb-2"
-                  >
-                    Email
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    required
-                    value={formData.email}
-                    onChange={handleChange}
-                    className="w-full px-4 py-3 bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-foreground"
-                    placeholder="your.email@example.com"
-                  />
+                <div className="flex flex-col gap-1.5">
+                  <label htmlFor="email" className="font-mono text-[0.7rem] tracking-[0.08em] uppercase text-muted-foreground">Email</label>
+                  <input id="email" name="email" type="email" required value={form.email} onChange={onChange} placeholder="you@example.com" className={INPUT} />
                 </div>
               </div>
 
-              <div>
-                <label
-                  htmlFor="subject"
-                  className="block text-sm font-medium text-foreground mb-2"
-                >
-                  Subject
-                </label>
-                <input
-                  type="text"
-                  id="subject"
-                  name="subject"
-                  required
-                  value={formData.subject}
-                  onChange={handleChange}
-                  className="w-full px-4 py-3 bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-foreground"
-                  placeholder="What's this about?"
-                />
+              <div className="flex flex-col gap-1.5">
+                <label htmlFor="subject" className="font-mono text-[0.7rem] tracking-[0.08em] uppercase text-muted-foreground">Subject</label>
+                <input id="subject" name="subject" type="text" required value={form.subject} onChange={onChange} placeholder="What's this about?" className={INPUT} />
               </div>
 
-              <div>
-                <label
-                  htmlFor="message"
-                  className="block text-sm font-medium text-foreground mb-2"
-                >
-                  Message
-                </label>
-                <textarea
-                  id="message"
-                  name="message"
-                  required
-                  value={formData.message}
-                  onChange={handleChange}
-                  rows={6}
-                  className="w-full px-4 py-3 bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-foreground resize-none"
-                  placeholder="Your message..."
-                />
+              <div className="flex flex-col gap-1.5">
+                <label htmlFor="message" className="font-mono text-[0.7rem] tracking-[0.08em] uppercase text-muted-foreground">Message</label>
+                <textarea id="message" name="message" required value={form.message} onChange={onChange} rows={5} placeholder="Tell me about your project or opportunity..." className={`${INPUT} resize-none`} />
               </div>
 
-              <Button type="submit" size="lg" className="w-full">
-                <FiSend className="mr-2" />
-                Send Message
-              </Button>
+              <button
+                type="submit"
+                className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-lg bg-primary text-white text-sm font-medium hover:bg-primary-dark transition-colors"
+              >
+                <FiSend size={15} />
+                {sent ? "Message opened in mail client" : "Send Message"}
+              </button>
             </form>
           </motion.div>
         </motion.div>

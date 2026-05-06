@@ -2,205 +2,187 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FiGithub, FiExternalLink, FiCode, FiStar } from "react-icons/fi";
-import { Button } from "@/components/ui/button";
-import { projects, Project } from "@/data/projects";
+import { FiGithub, FiExternalLink } from "react-icons/fi";
+import { projects, Project, ProjectBadge } from "@/data/projects";
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.2,
-    },
-  },
+const BADGE_STYLES: Record<ProjectBadge, string> = {
+  "Owner":           "text-primary  bg-primary/10  border-primary/25",
+  "In Development":  "text-amber-400 bg-amber-400/10 border-amber-400/25",
+  "College Project": "text-accent   bg-accent/10   border-accent/25",
 };
 
-const itemVariants = {
-  hidden: { y: 20, opacity: 0 },
-  visible: {
-    y: 0,
-    opacity: 1,
-    transition: {
-      duration: 0.5,
-    },
-  },
+const container = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { staggerChildren: 0.1 } },
+};
+const cardAnim = {
+  hidden: { y: 24, opacity: 0 },
+  visible: { y: 0, opacity: 1, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] as const } },
 };
 
 function ProjectCard({ project }: { project: Project }) {
   return (
     <motion.div
-      variants={itemVariants}
+      variants={cardAnim}
       layout
-      className="group relative bg-card border border-border rounded-2xl overflow-hidden hover:border-primary transition-all duration-300 hover:shadow-xl hover:shadow-primary/10"
+      className="card-base p-6 flex flex-col gap-4 group relative overflow-hidden"
     >
-      {/* Featured Badge */}
-      {project.featured && (
-        <div className="absolute top-4 right-4 z-10">
-          <div className="flex items-center gap-1 px-3 py-1 bg-primary text-white text-xs font-semibold rounded-full shadow-lg">
-            <FiStar size={12} />
-            Featured
-          </div>
-        </div>
-      )}
-
-      <div className="p-6">
-        {/* Header */}
-        <div className="flex items-start justify-between mb-4">
-          <div className="p-3 bg-primary/10 rounded-lg">
-            <FiCode className="text-primary" size={24} />
-          </div>
-          <div className="flex items-center gap-2">
-            {project.githubUrl && (
-              <a
-                href={project.githubUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2 rounded-lg hover:bg-card-hover transition-colors text-muted-foreground hover:text-primary"
-              >
-                <FiGithub size={20} />
-              </a>
-            )}
-            {project.liveUrl && (
-              <a
-                href={project.liveUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2 rounded-lg hover:bg-card-hover transition-colors text-muted-foreground hover:text-primary"
-              >
-                <FiExternalLink size={20} />
-              </a>
-            )}
-          </div>
-        </div>
-
-        {/* Title & Description */}
-        <h3 className="text-xl font-bold text-foreground mb-2 group-hover:text-primary transition-colors">
-          {project.title}
-        </h3>
-        <p className="text-sm text-muted-foreground mb-4 line-clamp-2">
-          {project.description}
-        </p>
-
-        {/* Highlights */}
-        {project.highlights && project.highlights.length > 0 && (
-          <ul className="space-y-2 mb-4">
-            {project.highlights.slice(0, 2).map((highlight, i) => (
-              <li key={i} className="flex items-start gap-2">
-                <span className="mt-1 w-1 h-1 bg-primary rounded-full flex-shrink-0"></span>
-                <span className="text-xs text-muted-foreground line-clamp-2">
-                  {highlight}
-                </span>
-              </li>
-            ))}
-          </ul>
+      {/* top row: badge left, icon links right */}
+      <div className="flex items-center justify-between gap-2">
+        {project.badge ? (
+          <span className={`font-mono text-[0.6rem] tracking-[0.1em] uppercase border rounded-md px-2 py-0.5 ${BADGE_STYLES[project.badge]}`}>
+            {project.badge}
+          </span>
+        ) : (
+          <span />
         )}
-
-        {/* Technologies */}
-        <div className="flex flex-wrap gap-2">
-          {project.technologies.slice(0, 4).map((tech) => (
-            <span
-              key={tech}
-              className="px-2 py-1 text-xs font-medium bg-muted text-foreground rounded border border-border"
-            >
-              {tech}
-            </span>
-          ))}
-          {project.technologies.length > 4 && (
-            <span className="px-2 py-1 text-xs font-medium text-muted-foreground">
-              +{project.technologies.length - 4} more
-            </span>
+        <div className="flex items-center gap-1">
+          {project.githubUrl && (
+            <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" aria-label="GitHub"
+              className="p-1.5 rounded-md text-muted-foreground hover:text-primary hover:bg-card-hover transition-colors">
+              <FiGithub size={15} />
+            </a>
+          )}
+          {project.liveUrl && (
+            <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" aria-label="Live site"
+              className="p-1.5 rounded-md text-muted-foreground hover:text-primary hover:bg-card-hover transition-colors">
+              <FiExternalLink size={15} />
+            </a>
           )}
         </div>
       </div>
 
-      {/* Hover Effect */}
-      <div className="absolute inset-0 bg-gradient-to-t from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
+      {/* title */}
+      <div>
+        <h3 className="text-base font-bold text-foreground leading-snug group-hover:text-primary transition-colors">
+          {project.title}
+        </h3>
+      </div>
+
+      {/* description */}
+      <p className="text-sm text-muted-foreground leading-relaxed line-clamp-2">
+        {project.description}
+      </p>
+
+      {/* highlights */}
+      {project.highlights?.length > 0 && (
+        <ul className="space-y-1.5">
+          {project.highlights.slice(0, 2).map((h, i) => (
+            <li key={i} className="flex items-start gap-2">
+              <span className="mt-[7px] w-1 h-1 rounded-full bg-primary/60 shrink-0" />
+              <span className="text-xs text-muted-foreground leading-relaxed line-clamp-2">{h}</span>
+            </li>
+          ))}
+        </ul>
+      )}
+
+      {/* spacer */}
+      <div className="flex-1" />
+
+      {/* footer row: tech chips only */}
+      <div className="flex items-end justify-between gap-3">
+        <div className="flex flex-wrap gap-1.5">
+          {project.technologies.slice(0, 4).map((tech) => (
+            <span key={tech} className="chip text-[0.65rem] px-2 py-0.5">
+              {tech}
+            </span>
+          ))}
+          {project.technologies.length > 4 && (
+            <span className="font-mono text-[0.65rem] text-muted-foreground/60 self-center">
+              +{project.technologies.length - 4}
+            </span>
+          )}
+        </div>
+        <div>{/* links moved to top row */}
+        </div>
+      </div>
+
+      {/* hover shimmer */}
+      <div className="absolute inset-0 bg-gradient-to-br from-primary/3 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
     </motion.div>
   );
 }
 
-export default function Projects() {
-  const [filter, setFilter] = useState<"all" | "featured">("all");
+type Filter = "all" | "featured";
 
-  const filteredProjects =
-    filter === "featured" ? projects.filter((p) => p.featured) : projects;
+export default function Projects() {
+  const [filter, setFilter] = useState<Filter>("featured");
+
+  const visible = filter === "featured" ? projects.filter((p) => p.featured) : projects;
 
   return (
-    <section id="projects" className="py-20 relative overflow-hidden">
-      {/* Background Elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute w-96 h-96 top-1/3 -right-48 bg-primary/5 rounded-full blur-3xl"></div>
-      </div>
+    <section id="projects" className="py-24 relative overflow-hidden">
+      <div className="absolute -top-20 -right-40 w-[400px] h-[400px] rounded-full bg-primary/4 blur-3xl pointer-events-none" aria-hidden />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        {/* Section Header */}
+
+        {/* heading */}
         <motion.div
-          initial={{ y: -20, opacity: 0 }}
+          initial={{ y: 20, opacity: 0 }}
           whileInView={{ y: 0, opacity: 1 }}
           viewport={{ once: true }}
-          className="text-center mb-12"
+          transition={{ duration: 0.5 }}
+          className="mb-10"
         >
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4">
-            Featured{" "}
-            <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-              Projects
-            </span>
-          </h2>
-          <p className="text-muted-foreground text-lg max-w-2xl mx-auto mb-8">
-            A collection of projects showcasing my skills in backend development,
-            microservices, and full-stack applications
-          </p>
+          <span className="section-label">Projects</span>
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+            <h2 className="text-4xl sm:text-5xl font-extrabold tracking-tight leading-tight">
+              Things I&apos;ve<br />
+              <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+                Built
+              </span>
+            </h2>
 
-          {/* Filter Buttons */}
-          <div className="flex items-center justify-center gap-4">
-            <Button
-              variant={filter === "all" ? "default" : "outline"}
-              onClick={() => setFilter("all")}
-            >
-              All Projects
-            </Button>
-            <Button
-              variant={filter === "featured" ? "default" : "outline"}
-              onClick={() => setFilter("featured")}
-            >
-              Featured Only
-            </Button>
+            {/* filter pills */}
+            <div className="flex items-center gap-2 self-start sm:self-auto">
+              {(["featured", "all"] as Filter[]).map((f) => (
+                <button
+                  key={f}
+                  onClick={() => setFilter(f)}
+                  className={`font-mono text-[0.72rem] tracking-[0.06em] uppercase px-3.5 py-1.5 rounded-md border transition-colors ${
+                    filter === f
+                      ? "bg-primary/10 border-primary/30 text-primary"
+                      : "border-border text-muted-foreground hover:border-primary/20 hover:text-foreground"
+                  }`}
+                >
+                  {f === "featured" ? "Featured" : "All"}
+                </button>
+              ))}
+            </div>
           </div>
         </motion.div>
 
-        {/* Projects Grid */}
+        {/* grid */}
         <AnimatePresence mode="wait">
           <motion.div
             key={filter}
-            variants={containerVariants}
+            variants={container}
             initial="hidden"
             animate="visible"
-            exit="hidden"
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+            exit={{ opacity: 0 }}
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"
           >
-            {filteredProjects.map((project) => (
+            {visible.map((project) => (
               <ProjectCard key={project.id} project={project} />
             ))}
           </motion.div>
         </AnimatePresence>
 
-        {/* GitHub CTA */}
+        {/* github CTA */}
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          className="text-center mt-12"
+          className="mt-10 flex justify-center"
         >
           <a
             href="https://github.com/TonyStark0801"
             target="_blank"
             rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg border border-border font-mono text-sm text-muted-foreground hover:border-primary/40 hover:text-foreground transition-colors"
           >
-            <Button size="lg" variant="outline">
-              <FiGithub className="mr-2" />
-              View More on GitHub
-            </Button>
+            <FiGithub size={16} />
+            More on GitHub
           </a>
         </motion.div>
       </div>

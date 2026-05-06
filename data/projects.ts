@@ -1,3 +1,5 @@
+export type ProjectBadge = "Owner" | "In Development" | "College Project";
+
 export interface Project {
   id: string;
   title: string;
@@ -7,49 +9,52 @@ export interface Project {
   githubUrl?: string;
   liveUrl?: string;
   featured: boolean;
+  badge?: ProjectBadge;
   image?: string;
   highlights: string[];
 }
 
 export const projects: Project[] = [
   {
-    id: "stockpulse",
-    title: "StockPulse - Stock Monitoring Platform",
-    description: "Full-stack stock monitoring platform with real-time market data and portfolio tracking",
-    longDescription: "A comprehensive stock monitoring platform built with modern microservices architecture featuring real-time market data, portfolio tracking, and advanced authentication.",
-    technologies: [
-      "Next.js 15",
-      "TypeScript",
-      "Spring Boot",
-      "PostgreSQL",
-      "JWT",
-      "Spring Security",
-      "Vercel",
-      "Capacitor",
-    ],
-    githubUrl: "https://github.com/TonyStark0801/stock-monitoring-backend",
+    id: "codejam",
+    title: "CodeJam — Collaborative Coding Platform",
+    description: "Real-time collaborative coding platform — code together, build faster",
+    longDescription: "CodeJam is a full-stack collaborative coding platform built under the codejam-dev organisation, enabling developers to write and run code together in real time.",
+    technologies: ["Java", "Spring Boot", "TypeScript", "Next.js", "WebSockets"],
+    githubUrl: "https://github.com/codejam-dev/codejam-backend",
+    liveUrl: "https://codejam.shubham-dev.me/",
     featured: true,
+    badge: "Owner",
     highlights: [
-      "Built responsive web interface using Next.js 15 with TypeScript, deployed on Vercel with CI/CD pipeline",
-      "Integrated Capacitor for cross-platform iOS/Android deployment",
-      "Implemented authentication backend with email/password registration, SMTP-based OTP verification, JWT tokens",
-      "Designed microservices architecture with Spring Boot services for authentication, user profiles, market data, and API Gateway",
+      "Built Java/Spring Boot backend with real-time session management for collaborative editing",
+      "TypeScript + Next.js frontend with live code synchronisation",
+      "Designed multi-user room system with role-based access and execution sandboxing",
+    ],
+  },
+  {
+    id: "kairo",
+    title: "KAIRO — Knowledge-Aware Interactive Runtime Operator",
+    description: "Personal AI agent with contextual knowledge awareness — actively in development",
+    longDescription: "KAIRO is a personal AI agent designed to bridge intelligent context management with real-time execution workflows.",
+    technologies: ["AI", "Runtime Systems", "Knowledge Graphs", "TypeScript"],
+    githubUrl: "https://github.com/TonyStark0801/KAIRO",
+    featured: true,
+    badge: "In Development",
+    highlights: [
+      "Designing knowledge-aware architecture for contextual decision making at runtime",
+      "Building interactive operator model enabling real-time workflow orchestration",
+      "Focused on intelligent context propagation across distributed execution environments",
     ],
   },
   {
     id: "dvote",
-    title: "DVote - Decentralized Voting System",
+    title: "DVote — Decentralized Voting System",
     description: "Blockchain-based voting system with Aadhaar authentication",
     longDescription: "A secure decentralized voting platform built on Ethereum blockchain with Aadhaar card authentication for identity verification.",
-    technologies: [
-      "Ethereum",
-      "Solidity",
-      "JavaScript",
-      "Web3.js",
-      "Smart Contracts",
-    ],
+    technologies: ["Ethereum", "Solidity", "JavaScript", "Web3.js", "Smart Contracts"],
     githubUrl: "https://github.com/TonyStark0801/Dvote",
     featured: true,
+    badge: "College Project",
     highlights: [
       "Implemented blockchain-based voting for transparency and immutability",
       "Integrated Aadhaar authentication for secure voter verification",
@@ -58,44 +63,16 @@ export const projects: Project[] = [
   },
   {
     id: "instantly",
-    title: "Instantly - P2P File Sharing",
-    description: "Peer-to-peer file sharing application with web portal",
+    title: "Instantly — P2P File Sharing",
+    description: "Peer-to-peer file sharing Android app with a web management portal",
     longDescription: "A fast and secure peer-to-peer file sharing application with Android app and web management portal.",
-    technologies: ["Java", "Android", "CSS", "JavaScript", "P2P"],
+    technologies: ["Java", "Android", "JavaScript", "CSS", "P2P"],
     githubUrl: "https://github.com/TonyStark0801/Instantly",
     featured: false,
     highlights: [
       "Built Android application for direct peer-to-peer file transfers",
       "Created web portal for file management and sharing",
       "Implemented secure file transfer protocols",
-    ],
-  },
-  {
-    id: "otp-verification",
-    title: "OTP Verification Service",
-    description: "Backend service for OTP verification using Twilio and NestJS",
-    longDescription: "A robust OTP verification backend service built with NestJS framework and Twilio integration for SMS delivery.",
-    technologies: ["TypeScript", "NestJS", "Twilio", "REST API"],
-    githubUrl: "https://github.com/TonyStark0801/Otp-verification",
-    featured: false,
-    highlights: [
-      "Built with NestJS framework for scalable architecture",
-      "Integrated Twilio for SMS delivery",
-      "RESTful API design with rate limiting",
-    ],
-  },
-  {
-    id: "dsa",
-    title: "DSA Solutions Repository",
-    description: "Comprehensive collection of Data Structures and Algorithms solutions",
-    longDescription: "A curated collection of topic-wise solved DSA questions with detailed descriptions and explanations.",
-    technologies: ["Java", "Algorithms", "Data Structures"],
-    githubUrl: "https://github.com/TonyStark0801/DSA",
-    featured: false,
-    highlights: [
-      "Topic-wise organized solutions",
-      "Detailed problem descriptions and approaches",
-      "Optimized implementations with complexity analysis",
     ],
   },
 ];

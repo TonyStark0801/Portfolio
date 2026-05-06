@@ -1,144 +1,106 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { FiBriefcase, FiCheck } from "react-icons/fi";
+import { FiArrowUpRight } from "react-icons/fi";
 import { experiences } from "@/data/experience";
 
-const containerVariants = {
+const container = {
   hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.3,
-    },
-  },
+  visible: { opacity: 1, transition: { staggerChildren: 0.18 } },
 };
-
-const itemVariants = {
-  hidden: { x: -50, opacity: 0 },
-  visible: {
-    x: 0,
-    opacity: 1,
-    transition: {
-      duration: 0.5,
-    },
-  },
+const card = {
+  hidden: { y: 32, opacity: 0 },
+  visible: { y: 0, opacity: 1, transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] as const } },
 };
 
 export default function Experience() {
   return (
-    <section id="experience" className="py-20 relative overflow-hidden">
-      {/* Background Elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute w-96 h-96 top-1/4 -left-48 bg-accent/5 rounded-full blur-3xl"></div>
-      </div>
+    <section id="experience" className="py-24 relative overflow-hidden">
+      {/* bg orb */}
+      <div className="absolute -top-40 -left-40 w-[420px] h-[420px] rounded-full bg-accent/5 blur-3xl pointer-events-none" aria-hidden />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        {/* Section Header */}
+
+        {/* section label + heading — left-aligned */}
         <motion.div
-          initial={{ y: -20, opacity: 0 }}
+          initial={{ y: 20, opacity: 0 }}
           whileInView={{ y: 0, opacity: 1 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          transition={{ duration: 0.5 }}
+          className="mb-14"
         >
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4">
-            Professional{" "}
+          <span className="section-label">Experience</span>
+          <h2 className="text-4xl sm:text-5xl font-extrabold tracking-tight leading-tight">
+            Where I&apos;ve<br />
             <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-              Experience
+              Worked
             </span>
           </h2>
-          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            Building secure, scalable systems at Jio Platforms Limited
-          </p>
         </motion.div>
 
-        {/* Timeline */}
+        {/* cards */}
         <motion.div
-          variants={containerVariants}
+          variants={container}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          className="space-y-12"
+          viewport={{ once: true, margin: "-80px" }}
+          className="flex flex-col gap-6"
         >
-          {experiences.map((exp, index) => (
+          {experiences.map((exp) => (
             <motion.div
               key={exp.id}
-              variants={itemVariants}
-              className="relative"
+              variants={card}
+              className="card-base p-7 lg:p-9 group"
             >
-              {/* Timeline Line */}
-              {index !== experiences.length - 1 && (
-                <div className="absolute left-6 top-16 bottom-0 w-0.5 bg-gradient-to-b from-primary to-transparent hidden lg:block"></div>
-              )}
-
-              {/* Experience Card */}
-              <div className="group relative bg-card border border-border rounded-2xl p-6 lg:p-8 hover:border-primary transition-all duration-300 hover:shadow-xl hover:shadow-primary/10">
-                {/* Timeline Dot */}
-                <div className="absolute -left-3 top-8 w-6 h-6 bg-primary rounded-full border-4 border-background hidden lg:block group-hover:scale-125 transition-transform"></div>
-
-                {/* Header */}
-                <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between mb-6 gap-4">
-                  <div className="flex items-start gap-4">
-                    <div className="p-3 bg-primary/10 rounded-lg">
-                      <FiBriefcase className="text-primary" size={24} />
-                    </div>
-                    <div>
-                      <h3 className="text-2xl font-bold text-foreground mb-1">
-                        {exp.role}
-                      </h3>
-                      <p className="text-lg font-semibold text-primary mb-1">
-                        {exp.company}
-                      </p>
-                      <p className="text-sm text-accent font-medium mb-1">
-                        {exp.team}
-                      </p>
-                      <p className="text-sm text-muted-foreground">
-                        {exp.location}
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-2 px-4 py-2 bg-muted rounded-lg border border-border">
-                    <span className="text-sm font-medium text-foreground">
-                      {exp.period}
-                    </span>
-                  </div>
-                </div>
-
-                {/* Achievements */}
-                <div className="space-y-3 mb-6">
-                  <h4 className="text-sm font-semibold text-foreground uppercase tracking-wide">
-                    Key Achievements
-                  </h4>
-                  <ul className="space-y-3">
-                    {exp.achievements.map((achievement, i) => (
-                      <li key={i} className="flex items-start gap-3">
-                        <div className="mt-1 p-0.5 bg-primary/20 rounded-full">
-                          <FiCheck className="text-primary" size={14} />
-                        </div>
-                        <span className="text-sm text-muted-foreground leading-relaxed flex-1">
-                          {achievement}
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                {/* Technologies */}
+              {/* header row */}
+              <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-6">
                 <div>
-                  <h4 className="text-sm font-semibold text-foreground uppercase tracking-wide mb-3">
-                    Technologies Used
-                  </h4>
-                  <div className="flex flex-wrap gap-2">
-                    {exp.technologies.map((tech) => (
-                      <span
-                        key={tech}
-                        className="px-3 py-1 text-xs font-medium bg-muted text-foreground rounded-full border border-border hover:border-primary hover:bg-primary/10 transition-colors"
-                      >
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
+                  {/* role */}
+                  <h3 className="text-xl font-bold text-foreground mb-1 leading-snug">
+                    {exp.role}
+                  </h3>
+                  {/* company */}
+                  <p className="font-mono text-[0.8rem] tracking-[0.06em] text-primary uppercase mb-0.5">
+                    {exp.company}
+                  </p>
+                  {/* team */}
+                  {exp.team && (
+                    <p className="font-mono text-[0.72rem] tracking-[0.04em] text-accent/80">
+                      {exp.team}
+                    </p>
+                  )}
                 </div>
+
+                {/* period + location */}
+                <div className="flex flex-col items-start sm:items-end gap-1 shrink-0">
+                  <span className="font-mono text-[0.72rem] tracking-[0.06em] text-muted-foreground bg-muted/50 border border-border rounded-md px-3 py-1 whitespace-nowrap">
+                    {exp.period}
+                  </span>
+                  {exp.location && (
+                    <span className="font-mono text-[0.68rem] text-muted-foreground/70">
+                      {exp.location}
+                    </span>
+                  )}
+                </div>
+              </div>
+
+              {/* achievements */}
+              <ul className="space-y-2.5 mb-6">
+                {exp.achievements.map((a, i) => (
+                  <li key={i} className="flex items-start gap-3">
+                    <span className="mt-[7px] w-1 h-1 rounded-full bg-primary shrink-0" />
+                    <span className="text-sm text-muted-foreground leading-relaxed">{a}</span>
+                  </li>
+                ))}
+              </ul>
+
+              {/* tech chips */}
+              <div className="flex flex-wrap gap-2">
+                {exp.technologies.map((tech) => (
+                  <span key={tech} className="chip text-[0.7rem]">
+                    {tech}
+                  </span>
+                ))}
               </div>
             </motion.div>
           ))}

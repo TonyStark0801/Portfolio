@@ -3,142 +3,137 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { FiMenu, FiX, FiGithub, FiLinkedin, FiMail } from "react-icons/fi";
-import { Button } from "@/components/ui/button";
+import { FiMenu, FiX } from "react-icons/fi";
 import { personalInfo } from "@/data/personal";
 
 const navLinks = [
-  { name: "Home", href: "#home" },
   { name: "Experience", href: "#experience" },
-  { name: "Projects", href: "#projects" },
-  { name: "Skills", href: "#skills" },
-  { name: "Blog", href: "#blog" },
-  { name: "Contact", href: "#contact" },
+  { name: "Projects",   href: "#projects"   },
+  { name: "Skills",     href: "#skills"     },
+  { name: "Contact",    href: "#contact"    },
 ];
 
 export default function Navbar() {
-  const [scrolled, setScrolled] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [scrolled, setScrolled]         = useState(false);
+  const [mobileOpen, setMobileOpen]     = useState(false);
+  const [activeSection, setActiveSection] = useState("home");
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    const onScroll = () => setScrolled(window.scrollY > 40);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  /* close mobile menu on resize to desktop */
+  useEffect(() => {
+    const onResize = () => { if (window.innerWidth >= 768) setMobileOpen(false); };
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
   }, []);
 
   return (
     <motion.nav
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      initial={{ y: -80, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+      className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${
         scrolled
-          ? "bg-background/80 backdrop-blur-lg border-b border-border shadow-lg"
+          ? "bg-background/85 backdrop-blur-xl border-b border-border/60 shadow-sm"
           : "bg-transparent"
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          {/* Logo */}
-          <Link href="#home" className="flex items-center space-x-2">
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              className="text-xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent"
+
+          {/* brand */}
+          <Link href="#home" className="group flex items-center gap-1.5">
+            <span
+              className="font-display text-xl font-extrabold tracking-tight bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent"
+              style={{ fontFamily: "var(--font-syne), sans-serif" }}
             >
-              SM
-            </motion.div>
+              SM.
+            </span>
           </Link>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-1">
+          {/* desktop links */}
+          <div className="hidden md:flex items-center gap-1">
             {navLinks.map((link) => (
               <Link key={link.name} href={link.href}>
-                <motion.div
-                  whileHover={{ scale: 1.05 }}
-                  className="px-4 py-2 rounded-lg text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-card-hover transition-colors"
-                >
+                <span className="px-4 py-1.5 rounded-md font-mono text-[0.78rem] tracking-[0.04em] text-muted-foreground hover:text-foreground hover:bg-white/4 transition-colors">
                   {link.name}
-                </motion.div>
+                </span>
               </Link>
             ))}
           </div>
 
-          {/* Social Icons & CTA */}
-          <div className="hidden md:flex items-center space-x-4">
+          {/* CTA */}
+          <div className="hidden md:flex items-center gap-3">
             <a
-              href={personalInfo.github}
+              href={personalInfo.resumeUrl}
+              download
               target="_blank"
               rel="noopener noreferrer"
-              className="text-muted-foreground hover:text-primary transition-colors"
+              className="font-mono text-[0.75rem] tracking-[0.06em] text-muted-foreground hover:text-foreground transition-colors"
             >
-              <FiGithub size={20} />
+              Resume
             </a>
             <a
-              href={personalInfo.linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-muted-foreground hover:text-primary transition-colors"
+              href="#contact"
+              className="px-4 py-1.5 rounded-lg bg-primary text-white font-mono text-[0.75rem] tracking-[0.04em] hover:bg-primary-dark transition-colors"
             >
-              <FiLinkedin size={20} />
-            </a>
-            <a href="#contact">
-              <Button size="sm">Get in Touch</Button>
+              Hire me
             </a>
           </div>
 
-          {/* Mobile Menu Button */}
+          {/* mobile hamburger */}
           <button
-            className="md:hidden text-foreground"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-label="Toggle menu"
+            className="md:hidden p-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-card-hover transition-colors"
+            onClick={() => setMobileOpen((v) => !v)}
           >
-            {mobileMenuOpen ? <FiX size={24} /> : <FiMenu size={24} />}
+            {mobileOpen ? <FiX size={20} /> : <FiMenu size={20} />}
           </button>
         </div>
       </div>
 
-      {/* Mobile Menu */}
+      {/* mobile drawer */}
       <AnimatePresence>
-        {mobileMenuOpen && (
+        {mobileOpen && (
           <motion.div
+            key="mobile"
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-card border-t border-border"
+            transition={{ duration: 0.25 }}
+            className="md:hidden bg-card border-t border-border overflow-hidden"
           >
-            <div className="px-4 py-4 space-y-3">
+            <div className="px-6 py-5 flex flex-col gap-1">
               {navLinks.map((link) => (
                 <Link
                   key={link.name}
                   href={link.href}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="block px-4 py-2 rounded-lg text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-card-hover transition-colors"
+                  onClick={() => setMobileOpen(false)}
+                  className="py-2.5 font-mono text-sm text-muted-foreground hover:text-primary transition-colors"
                 >
                   {link.name}
                 </Link>
               ))}
-              <div className="flex items-center justify-center space-x-6 pt-4 border-t border-border">
+              <div className="pt-4 border-t border-border mt-2 flex gap-3">
                 <a
-                  href={personalInfo.github}
+                  href={personalInfo.resumeUrl}
+                  download
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-muted-foreground hover:text-primary transition-colors"
+                  className="flex-1 text-center py-2 rounded-lg border border-border font-mono text-xs text-muted-foreground hover:text-foreground hover:border-primary/40 transition-colors"
                 >
-                  <FiGithub size={24} />
+                  Resume
                 </a>
                 <a
-                  href={personalInfo.linkedin}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-muted-foreground hover:text-primary transition-colors"
+                  href="#contact"
+                  onClick={() => setMobileOpen(false)}
+                  className="flex-1 text-center py-2 rounded-lg bg-primary font-mono text-xs text-white hover:bg-primary-dark transition-colors"
                 >
-                  <FiLinkedin size={24} />
-                </a>
-                <a
-                  href={`mailto:${personalInfo.email}`}
-                  className="text-muted-foreground hover:text-primary transition-colors"
-                >
-                  <FiMail size={24} />
+                  Hire me
                 </a>
               </div>
             </div>
