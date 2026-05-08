@@ -40,7 +40,7 @@ export default function Contact() {
           <div className="chapter-tag">
             <span className="line" />
             <span>
-              <span className="num">06</span>&nbsp; say hi
+              <span className="num">07</span>&nbsp; say hi
             </span>
           </div>
 
