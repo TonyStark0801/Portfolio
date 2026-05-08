@@ -25,13 +25,6 @@ const CARDS = [
     action: "github.com/TonyStark0801",
     href: personalInfo.github,
   },
-  {
-    eyebrow: "// best for urgent",
-    main: "Or just call.",
-    sub: "If you're in Mumbai and want to grab a chai instead of typing, that works too.",
-    action: personalInfo.phone,
-    href: `tel:${personalInfo.phone.replace(/\s/g, "")}`,
-  },
 ];
 
 export default function Contact() {
