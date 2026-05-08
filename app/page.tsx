@@ -1,4 +1,5 @@
 import StarfieldBg from "@/components/ui/StarfieldBg";
+import ScrollToTop from "@/components/ui/ScrollToTop";
 import Navbar from "@/components/sections/Navbar";
 import Hero from "@/components/sections/Hero";
 import WhatIDo from "@/components/sections/WhatIDo";
@@ -24,6 +25,7 @@ export default function Home() {
         <Contact />
       </main>
       <Footer />
+      <ScrollToTop />
     </div>
   );
 }
