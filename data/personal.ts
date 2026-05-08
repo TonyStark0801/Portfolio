@@ -9,14 +9,14 @@ export const personalInfo = {
   linkedin: "https://www.linkedin.com/in/shubhammishra007/",
   resumeUrl: "/assets/Shubham_Mishra_Resume.pdf",
   profileImage: "/assets/Gemini_Generated_Image_p0b822p0b822p0b8.png",
-  bio: "Backend & Full-Stack Engineer specializing in building secure, scalable microservices at Jio. Expert in Spring Boot, FastAPI, and cloud infrastructure with a focus on financial technology and enterprise systems.",
-  yearsOfExperience: 1.2,
-  currentRole: "Building fintech solutions at Jio BlackRock Asset Management",
+  bio: "Backend engineer specializing in secure, scalable fintech systems at Jio. Encryption, payments, real-time event pipelines, and the invisible infrastructure that keeps money moving safely.",
+  yearsOfExperience: 2.5,
+  currentRole: "Building fintech infrastructure at Jio BlackRock Asset Management",
 };
 
 export const stats = [
-  { label: "Years Experience", value: "1.2+" },
+  { label: "Years Experience", value: "2.5+" },
   { label: "Projects Delivered", value: "15+" },
   { label: "Technologies", value: "20+" },
-  { label: "Code Commits", value: "1000+" },
+  { label: "Code Commits", value: "2000+" },
 ];

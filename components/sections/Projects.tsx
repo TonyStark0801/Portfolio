@@ -26,7 +26,7 @@ const WORK: WorkItem[] = [
       "A real-time collaborative coding platform with live cursors, shared sessions, and a sandboxed runner. Two people in different countries, one editor, code running on the server.",
     translation:
       "if you've ever wanted to pair-program with a friend at 2 AM without sharing a screen, this is that.",
-    stack: ["Java", "Spring Boot", "WebSockets", "TypeScript", "Next.js"],
+    stack: ["Java 21", "Spring Boot 3.4", "WebSockets", "TypeScript", "Next.js 15", "7 runtimes"],
     links: [
       { label: "visit", href: "https://codejam.shubham-dev.me/" },
       { label: "github", href: "https://github.com/codejam-dev/codejam-backend" },
@@ -39,12 +39,12 @@ const WORK: WorkItem[] = [
       { label: "Owner", type: "warm" },
     ],
     year: "2025 →",
-    title: "KAIRO — a personal AI agent that actually remembers what you're working on.",
+    title: "KAIRO — a voice-first AI agent that lives on your Mac and actually remembers.",
     blurb:
-      "Knowledge-Aware Interactive Runtime Operator. A long-running agent that holds context across workflows and acts on it — not a chatbot you re-explain yourself to every morning.",
+      "Knowledge-Aware Interactive Runtime Operator. A locally-running agent with voice input (Whisper STT via MLX), Ollama-backed LLM reasoning, Chroma vector memory, and macOS automation. Talks to you, remembers context, runs your workflows.",
     translation:
-      "I got tired of re-explaining my projects to ChatGPT, so I'm building one that remembers.",
-    stack: ["TypeScript", "Knowledge Graphs", "Runtime Systems", "AI"],
+      "I got tired of re-explaining my projects to ChatGPT, so I'm building one that remembers — and runs entirely offline.",
+    stack: ["Python 3.11", "asyncio", "Whisper / MLX", "Ollama", "Chroma", "macOS"],
     links: [{ label: "github", href: "https://github.com/TonyStark0801/KAIRO" }],
   },
   {

@@ -7,25 +7,27 @@ const EXPERIENCES = [
     role: "Software Development Engineer — I",
     team: "jio blackrock asset management",
     teamSub: "· fintech",
-    period: "Oct 2024 — present",
+    period: "Jan 2024 — present",
     location: "Mumbai, MH",
     achievements: [
-      "Architected a session-based encryption system (HKDF + AES-GCM) at the API gateway — every financial call gets its own forward-secret key.",
+      "Architected a session-based encryption system (HKDF + AES-GCM) at the API gateway — every financial call gets its own forward-secret key, preventing replay attacks.",
+      "Built Clickstream — a high-throughput user-journey event pipeline on Quarkus 3.x and Redis Streams with two-stage consumer groups, ZooKeeper feature flags, Zoho CRM sync, DLQ/retry, and Kubernetes deployment.",
+      "Built FlowTrace — annotation-driven monitoring for payments, with RBAC + Azure 2FA portal that traces investor journeys across six microservices.",
+      "Integrated Jio One Pay for transaction processing, CAMS APIs for fund purchases, and multi-bank management with cheque OCR and TPV verification.",
       "Built file storage with magic-byte validation, EICAR scanning, and AES-GCM-on-disk for InfoSec compliance.",
-      "Built FlowTrace — annotation-driven monitoring for payments, with RBAC + Azure 2FA portal.",
       "Shipped OTP service from scratch (SMS + Email) on Redis with TTL and rate limits.",
-      "Daily NAV/TER ingestion from collaborator banks; archive to Azure Blob; notify ops.",
+      "Daily NAV/TER ingestion from collaborator banks; validated, parsed, archived to Azure Blob, and notified ops automatically.",
     ],
     stack: [
-      "Spring Boot", "Quarkus", "Java", "PostgreSQL", "Redis",
-      "Azure", "Docker", "Kubernetes", "Kafka", "NGINX",
+      "Spring Boot", "Quarkus", "Java", "PostgreSQL", "Redis Streams",
+      "Azure (AKS · Blob · Key Vault)", "Docker", "Kubernetes", "Kafka", "ZooKeeper",
     ],
   },
   {
     role: "Software Development Engineer — I",
     team: "jio matrix analytics",
     teamSub: "· data platform",
-    period: "Oct 2023 — Sep 2024",
+    period: "Oct 2023 — Dec 2023",
     location: "Mumbai, MH",
     achievements: [
       "Rewrote Jio Engage + Jio Coupons APIs in FastAPI; introduced SQLAlchemy + Sqitch migrations.",
@@ -63,7 +65,7 @@ export default function Experience() {
           >
             Two teams,
             <br />
-            one company, <em>1.2 years.</em>
+            one company, <em>2.5 years.</em>
           </h2>
 
           <p
@@ -76,7 +78,7 @@ export default function Experience() {
             }}
           >
             Both at Jio Platforms — different floors, different codebases,
-            similar instinct: build it like the world depends on it, because
+            same instinct: build it like the world depends on it, because
             for fintech, it kind of does.
           </p>
         </motion.div>

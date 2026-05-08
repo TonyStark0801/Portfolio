@@ -13,7 +13,7 @@ const CLUSTERS = [
     cls: "c-be",
     label: "Backend",
     sub: "/ services & APIs",
-    pills: ["Spring Boot", "Quarkus", "FastAPI", "Hibernate", "REST", "Microservices"],
+    pills: ["Spring Boot", "Quarkus", "FastAPI", "Hibernate", "Redis Streams", "ZooKeeper", "REST", "Microservices"],
   },
   {
     cls: "c-data",
@@ -25,7 +25,7 @@ const CLUSTERS = [
     cls: "c-infra",
     label: "Infra",
     sub: "/ how it runs",
-    pills: ["Docker", "Kubernetes", "Kafka", "NGINX", "Azure", "GCP"],
+    pills: ["Docker", "Kubernetes", "Kafka", "NGINX", "Azure (AKS · Blob · Key Vault)", "GCP", "GitHub Actions", "DigitalOcean"],
   },
   {
     cls: "c-sec",

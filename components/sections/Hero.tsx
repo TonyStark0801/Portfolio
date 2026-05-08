@@ -129,18 +129,18 @@ export default function Hero() {
               Right now / May 2026
             </div>
             <div className="now-title">
-              Shipping FlowTrace v2 — a monitoring portal that watches every
-              payment leave the building.
+              Building CodeJam v2 — a collaborative coding platform where
+              two engineers share one editor, live.
             </div>
-            <div className="now-where">@ jio · blackrock asset management</div>
+            <div className="now-where">personal project · codejam-dev</div>
             <ul className="now-list">
               <li>
-                Annotation-based logging that auto-encrypts request/response
-                data
+                Spring Boot 3.4 + Java 21 backend with real-time session
+                management
               </li>
-              <li>RBAC + Azure 2FA for the operations console</li>
+              <li>Next.js 15 frontend with live cursors and shared state</li>
               <li>
-                Investor-journey tracing across six microservices
+                Sandboxed code execution across 7 language runtimes
               </li>
             </ul>
           </motion.aside>
