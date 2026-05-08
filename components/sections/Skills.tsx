@@ -1,68 +1,112 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { skillsData } from "@/data/skills";
 
-const container = {
-  hidden: { opacity: 0 },
-  visible: { opacity: 1, transition: { staggerChildren: 0.08 } },
-};
-const row = {
-  hidden: { y: 20, opacity: 0 },
-  visible: { y: 0, opacity: 1, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] as const } },
-};
+const CLUSTERS = [
+  {
+    cls: "c-lang",
+    label: "Languages",
+    sub: "/ what I write in",
+    pills: ["Java", "Python", "TypeScript", "JavaScript", "SQL"],
+  },
+  {
+    cls: "c-be",
+    label: "Backend",
+    sub: "/ services & APIs",
+    pills: ["Spring Boot", "Quarkus", "FastAPI", "Hibernate", "REST", "Microservices"],
+  },
+  {
+    cls: "c-data",
+    label: "Data",
+    sub: "/ stores & caches",
+    pills: ["PostgreSQL", "MySQL", "MongoDB", "Redis", "ClickHouse"],
+  },
+  {
+    cls: "c-infra",
+    label: "Infra",
+    sub: "/ how it runs",
+    pills: ["Docker", "Kubernetes", "Kafka", "NGINX", "Azure", "GCP"],
+  },
+  {
+    cls: "c-sec",
+    label: "Security",
+    sub: "/ keeping it safe",
+    pills: ["AES-GCM", "HKDF", "JWT", "RBAC", "Azure 2FA"],
+  },
+  {
+    cls: "c-fe",
+    label: "Frontend",
+    sub: "/ when I have to",
+    pills: ["React", "Next.js", "TypeScript", "Tailwind"],
+  },
+];
 
 export default function Skills() {
   return (
-    <section id="skills" className="py-24 relative overflow-hidden">
-      {/* subtle bg orbs */}
-      <div className="absolute top-1/4 left-1/3 w-[380px] h-[380px] rounded-full bg-accent/4 blur-3xl pointer-events-none" aria-hidden />
-      <div className="absolute bottom-1/4 right-1/4 w-[320px] h-[320px] rounded-full bg-primary/4 blur-3xl pointer-events-none" aria-hidden />
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-
-        {/* heading */}
+    <section id="tools">
+      <div className="chapter">
         <motion.div
           initial={{ y: 20, opacity: 0 }}
           whileInView={{ y: 0, opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="mb-14"
         >
-          <span className="section-label">Skills</span>
-          <h2 className="text-4xl sm:text-5xl font-extrabold tracking-tight leading-tight">
-            Tech I Work<br />
-            <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-              With
+          <div className="chapter-tag">
+            <span className="line" />
+            <span>
+              <span className="num">04</span>&nbsp; tools I reach for
             </span>
+          </div>
+
+          <h2
+            className="display"
+            style={{ fontSize: "clamp(40px, 5vw, 64px)" }}
+          >
+            My <em>toolkit,</em>
+            <br />
+            by neighbourhood.
           </h2>
+
+          <p
+            style={{
+              marginTop: "18px",
+              color: "var(--ink-2)",
+              maxWidth: "520px",
+              fontSize: "15.5px",
+              lineHeight: 1.7,
+            }}
+          >
+            Not every tool every day. These are grouped by the kind of problem
+            they solve, in roughly the order I reach for them.
+          </p>
         </motion.div>
 
-        {/* categories */}
         <motion.div
-          variants={container}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-60px" }}
-          className="flex flex-col gap-10"
+          className="clusters"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.15 }}
         >
-          {skillsData.map((cat) => (
-            <motion.div key={cat.category} variants={row}>
-              {/* category label */}
-              <p className="font-mono text-[0.68rem] tracking-[0.14em] uppercase text-muted-foreground mb-3">
-                // {cat.category}
-              </p>
-              {/* chip grid */}
-              <div className="flex flex-wrap gap-2">
-                {cat.skills.map((skill) => (
-                  <motion.span
-                    key={skill.name}
-                    whileHover={{ y: -2 }}
-                    transition={{ duration: 0.15 }}
-                    className="chip"
-                  >
-                    {skill.name}
-                  </motion.span>
+          {CLUSTERS.map((c, i) => (
+            <motion.div
+              key={c.label}
+              className={`cluster ${c.cls}`}
+              initial={{ y: 20, opacity: 0 }}
+              whileInView={{ y: 0, opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.45, delay: i * 0.07 }}
+            >
+              <div className="c-head">
+                <span className="dot" />
+                <span>{c.label}</span>
+                <span className="lbl">{c.sub}</span>
+              </div>
+              <div className="pills">
+                {c.pills.map((p) => (
+                  <span key={p} className="pill">
+                    {p}
+                  </span>
                 ))}
               </div>
             </motion.div>

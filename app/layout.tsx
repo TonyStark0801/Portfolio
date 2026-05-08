@@ -1,31 +1,45 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Syne } from "next/font/google";
+import { Instrument_Serif, Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const instrumentSerif = Instrument_Serif({
+  variable: "--font-instrument-serif",
   subsets: ["latin"],
+  weight: ["400"],
+  style: ["normal", "italic"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
+  weight: ["300", "400", "500", "600"],
 });
 
-const syne = Syne({
-  variable: "--font-syne",
+const jetbrainsMono = JetBrains_Mono({
+  variable: "--font-jetbrains-mono",
   subsets: ["latin"],
-  weight: ["700", "800"],
+  weight: ["400", "500"],
 });
 
 export const metadata: Metadata = {
-  title: "Shubham Mishra | Software Development Engineer",
-  description: "Backend & Full-Stack Engineer specializing in building secure, scalable microservices at Jio. Expert in Spring Boot, FastAPI, and cloud infrastructure.",
-  keywords: ["Shubham Mishra", "Software Engineer", "Backend Developer", "Full Stack Developer", "Spring Boot", "FastAPI", "Jio", "Microservices"],
+  title: "Shubham Mishra — Software Engineer",
+  description:
+    "Backend engineer building quiet, secure fintech infrastructure at Jio Platforms. Spring Boot, FastAPI, Kubernetes.",
+  keywords: [
+    "Shubham Mishra",
+    "Software Engineer",
+    "Backend Developer",
+    "Spring Boot",
+    "FastAPI",
+    "Jio Platforms",
+    "Fintech",
+    "Microservices",
+  ],
   authors: [{ name: "Shubham Mishra" }],
   openGraph: {
-    title: "Shubham Mishra | Software Development Engineer",
-    description: "Backend & Full-Stack Engineer specializing in building secure, scalable microservices",
+    title: "Shubham Mishra — Software Engineer",
+    description:
+      "Backend engineer building quiet, secure fintech infrastructure at Jio Platforms.",
     type: "website",
   },
 };
@@ -38,7 +52,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${syne.variable} antialiased`}
+        className={`${instrumentSerif.variable} ${inter.variable} ${jetbrainsMono.variable} antialiased`}
       >
         {children}
       </body>

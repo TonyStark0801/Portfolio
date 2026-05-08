@@ -1,190 +1,171 @@
 "use client";
 
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { FiGithub, FiExternalLink } from "react-icons/fi";
-import { projects, Project, ProjectBadge } from "@/data/projects";
+import { motion } from "framer-motion";
 
-const BADGE_STYLES: Record<ProjectBadge, string> = {
-  "Owner":           "text-primary  bg-primary/10  border-primary/25",
-  "In Development":  "text-amber-400 bg-amber-400/10 border-amber-400/25",
-  "College Project": "text-accent   bg-accent/10   border-accent/25",
-};
-
-const container = {
-  hidden: { opacity: 0 },
-  visible: { opacity: 1, transition: { staggerChildren: 0.1 } },
-};
-const cardAnim = {
-  hidden: { y: 24, opacity: 0 },
-  visible: { y: 0, opacity: 1, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] as const } },
-};
-
-function ProjectCard({ project }: { project: Project }) {
-  return (
-    <motion.div
-      variants={cardAnim}
-      layout
-      className="card-base p-6 flex flex-col gap-4 group relative overflow-hidden"
-    >
-      {/* top row: badge left, icon links right */}
-      <div className="flex items-center justify-between gap-2">
-        {project.badge ? (
-          <span className={`font-mono text-[0.6rem] tracking-[0.1em] uppercase border rounded-md px-2 py-0.5 ${BADGE_STYLES[project.badge]}`}>
-            {project.badge}
-          </span>
-        ) : (
-          <span />
-        )}
-        <div className="flex items-center gap-1">
-          {project.githubUrl && (
-            <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" aria-label="GitHub"
-              className="p-1.5 rounded-md text-muted-foreground hover:text-primary hover:bg-card-hover transition-colors">
-              <FiGithub size={15} />
-            </a>
-          )}
-          {project.liveUrl && (
-            <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" aria-label="Live site"
-              className="p-1.5 rounded-md text-muted-foreground hover:text-primary hover:bg-card-hover transition-colors">
-              <FiExternalLink size={15} />
-            </a>
-          )}
-        </div>
-      </div>
-
-      {/* title */}
-      <div>
-        <h3 className="text-base font-bold text-foreground leading-snug group-hover:text-primary transition-colors">
-          {project.title}
-        </h3>
-      </div>
-
-      {/* description */}
-      <p className="text-sm text-muted-foreground leading-relaxed line-clamp-2">
-        {project.description}
-      </p>
-
-      {/* highlights */}
-      {project.highlights?.length > 0 && (
-        <ul className="space-y-1.5">
-          {project.highlights.slice(0, 2).map((h, i) => (
-            <li key={i} className="flex items-start gap-2">
-              <span className="mt-[7px] w-1 h-1 rounded-full bg-primary/60 shrink-0" />
-              <span className="text-xs text-muted-foreground leading-relaxed line-clamp-2">{h}</span>
-            </li>
-          ))}
-        </ul>
-      )}
-
-      {/* spacer */}
-      <div className="flex-1" />
-
-      {/* footer row: tech chips only */}
-      <div className="flex items-end justify-between gap-3">
-        <div className="flex flex-wrap gap-1.5">
-          {project.technologies.slice(0, 4).map((tech) => (
-            <span key={tech} className="chip text-[0.65rem] px-2 py-0.5">
-              {tech}
-            </span>
-          ))}
-          {project.technologies.length > 4 && (
-            <span className="font-mono text-[0.65rem] text-muted-foreground/60 self-center">
-              +{project.technologies.length - 4}
-            </span>
-          )}
-        </div>
-        <div>{/* links moved to top row */}
-        </div>
-      </div>
-
-      {/* hover shimmer */}
-      <div className="absolute inset-0 bg-gradient-to-br from-primary/3 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
-    </motion.div>
-  );
+interface WorkItem {
+  num: string;
+  badges: { label: string; type: "cool" | "warm" | "live" | "neutral" }[];
+  year: string;
+  title: string;
+  blurb: string;
+  translation: string;
+  stack: string[];
+  links: { label: string; href: string }[];
 }
 
-type Filter = "all" | "featured";
+const WORK: WorkItem[] = [
+  {
+    num: "01",
+    badges: [
+      { label: "Live", type: "live" },
+      { label: "Owner", type: "warm" },
+    ],
+    year: "2024 →",
+    title: "CodeJam — write code together, like a Google Doc but for engineers.",
+    blurb:
+      "A real-time collaborative coding platform with live cursors, shared sessions, and a sandboxed runner. Two people in different countries, one editor, code running on the server.",
+    translation:
+      "if you've ever wanted to pair-program with a friend at 2 AM without sharing a screen, this is that.",
+    stack: ["Java", "Spring Boot", "WebSockets", "TypeScript", "Next.js"],
+    links: [
+      { label: "visit", href: "https://codejam.shubham-dev.me/" },
+      { label: "github", href: "https://github.com/codejam-dev/codejam-backend" },
+    ],
+  },
+  {
+    num: "02",
+    badges: [
+      { label: "In development", type: "cool" },
+      { label: "Owner", type: "warm" },
+    ],
+    year: "2025 →",
+    title: "KAIRO — a personal AI agent that actually remembers what you're working on.",
+    blurb:
+      "Knowledge-Aware Interactive Runtime Operator. A long-running agent that holds context across workflows and acts on it — not a chatbot you re-explain yourself to every morning.",
+    translation:
+      "I got tired of re-explaining my projects to ChatGPT, so I'm building one that remembers.",
+    stack: ["TypeScript", "Knowledge Graphs", "Runtime Systems", "AI"],
+    links: [{ label: "github", href: "https://github.com/TonyStark0801/KAIRO" }],
+  },
+  {
+    num: "03",
+    badges: [{ label: "College project", type: "cool" }],
+    year: "2023",
+    title: "DVote — a voting system that nobody can rig, on Ethereum.",
+    blurb:
+      "Decentralized voting with Aadhaar-based identity check and blockchain-backed ballots. Final-year project that taught me how to think about adversarial systems.",
+    translation:
+      "if elections ran on this, you'd see your vote on the chain — and so would everyone else.",
+    stack: ["Solidity", "Ethereum", "Web3.js", "Smart Contracts"],
+    links: [{ label: "github", href: "https://github.com/TonyStark0801/Dvote" }],
+  },
+  {
+    num: "04",
+    badges: [],
+    year: "2022",
+    title: "Instantly — peer-to-peer file transfer, before AirDrop felt cross-platform.",
+    blurb:
+      "Android app + web portal that lets two devices send files directly without bouncing through a cloud. Faster than email, more honest than WhatsApp.",
+    translation: "",
+    stack: ["Java", "Android", "P2P", "JavaScript"],
+    links: [{ label: "github", href: "https://github.com/TonyStark0801/Instantly" }],
+  },
+];
+
+function badgeClass(type: WorkItem["badges"][0]["type"]) {
+  if (type === "warm") return "w-badge warm";
+  if (type === "live") return "w-badge live";
+  return "w-badge";
+}
 
 export default function Projects() {
-  const [filter, setFilter] = useState<Filter>("featured");
-
-  const visible = filter === "featured" ? projects.filter((p) => p.featured) : projects;
-
   return (
-    <section id="projects" className="py-24 relative overflow-hidden">
-      <div className="absolute -top-20 -right-40 w-[400px] h-[400px] rounded-full bg-primary/4 blur-3xl pointer-events-none" aria-hidden />
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-
-        {/* heading */}
+    <section id="work">
+      <div className="chapter">
         <motion.div
           initial={{ y: 20, opacity: 0 }}
           whileInView={{ y: 0, opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="mb-10"
         >
-          <span className="section-label">Projects</span>
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
-            <h2 className="text-4xl sm:text-5xl font-extrabold tracking-tight leading-tight">
-              Things I&apos;ve<br />
-              <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                Built
-              </span>
-            </h2>
-
-            {/* filter pills */}
-            <div className="flex items-center gap-2 self-start sm:self-auto">
-              {(["featured", "all"] as Filter[]).map((f) => (
-                <button
-                  key={f}
-                  onClick={() => setFilter(f)}
-                  className={`font-mono text-[0.72rem] tracking-[0.06em] uppercase px-3.5 py-1.5 rounded-md border transition-colors ${
-                    filter === f
-                      ? "bg-primary/10 border-primary/30 text-primary"
-                      : "border-border text-muted-foreground hover:border-primary/20 hover:text-foreground"
-                  }`}
-                >
-                  {f === "featured" ? "Featured" : "All"}
-                </button>
-              ))}
-            </div>
+          <div className="chapter-tag">
+            <span className="line" />
+            <span>
+              <span className="num">03</span>&nbsp; things I&apos;ve built
+            </span>
           </div>
+
+          <h2
+            className="display"
+            style={{ fontSize: "clamp(40px, 5vw, 68px)" }}
+          >
+            Selected <em>work.</em>
+          </h2>
+
+          <p
+            style={{
+              marginTop: "18px",
+              maxWidth: "540px",
+              fontSize: "16px",
+              color: "var(--ink-2)",
+              lineHeight: 1.7,
+            }}
+          >
+            A few projects outside of work — coding tools, AI agents, voting
+            systems. These are mine end-to-end.
+          </p>
         </motion.div>
 
-        {/* grid */}
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={filter}
-            variants={container}
-            initial="hidden"
-            animate="visible"
-            exit={{ opacity: 0 }}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"
-          >
-            {visible.map((project) => (
-              <ProjectCard key={project.id} project={project} />
-            ))}
-          </motion.div>
-        </AnimatePresence>
+        <div className="work-list">
+          {WORK.map((item, idx) => (
+            <motion.article
+              key={item.num}
+              className="work-item"
+              initial={{ y: 20, opacity: 0 }}
+              whileInView={{ y: 0, opacity: 1 }}
+              viewport={{ once: true, margin: "-60px" }}
+              transition={{ duration: 0.5, delay: idx * 0.07 }}
+            >
+              <div className="w-num">{item.num}</div>
 
-        {/* github CTA */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          className="mt-10 flex justify-center"
-        >
-          <a
-            href="https://github.com/TonyStark0801"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg border border-border font-mono text-sm text-muted-foreground hover:border-primary/40 hover:text-foreground transition-colors"
-          >
-            <FiGithub size={16} />
-            More on GitHub
-          </a>
-        </motion.div>
+              <div className="w-body">
+                <div className="w-eyebrow">
+                  {item.badges.map((b) => (
+                    <span key={b.label} className={badgeClass(b.type)}>
+                      {b.label}
+                    </span>
+                  ))}
+                  <span>{item.year}</span>
+                </div>
+
+                <h3 className="w-title">{item.title}</h3>
+                <p className="w-blurb">{item.blurb}</p>
+                {item.translation && (
+                  <p className="w-translate">{item.translation}</p>
+                )}
+
+                <div className="w-stack">
+                  {item.stack.map((t) => (
+                    <span key={t}>{t}</span>
+                  ))}
+                </div>
+              </div>
+
+              <div className="w-cta">
+                {item.links.map((l) => (
+                  <a
+                    key={l.label}
+                    href={l.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {l.label}&nbsp;<span className="arrow">↗</span>
+                  </a>
+                ))}
+              </div>
+            </motion.article>
+          ))}
+        </div>
       </div>
     </section>
   );
