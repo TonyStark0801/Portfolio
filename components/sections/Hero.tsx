@@ -53,9 +53,8 @@ export default function Hero() {
               <span className="line2">
                 <em>Shubham.</em>
               </span>
-              <span className="line3 quiet">I write the code between</span>
-              <span className="line3 quiet">&ldquo;tap pay&rdquo; and &ldquo;done&rdquo; —</span>
-              <span className="line3 quiet">the part that can&apos;t fail.</span>
+              <span className="line3 quiet">I build the quiet things</span>
+              <span className="line3 quiet">that move money safely.</span>
             </motion.h1>
 
             <motion.p
